@@ -23,7 +23,7 @@ class App extends Component {
           <button onClick={this.addCount}>add+</button>
         </div>
         <h1>
-          <span>hello--{name}</span>
+          <span>hello{name}</span>
         </h1>
       </div>
     );
