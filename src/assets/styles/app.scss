@@ -9,6 +9,12 @@ body {
   -webkit-font-smoothing: subpixel-antialiased;
   /*safari流畅滚动*/
 }
+img{
+  max-width: 100%;
+}
 .container{
-  background: url('../images/15501.jpg');
+  padding:20px;
+}
+.tc{
+  text-align: center;
 }

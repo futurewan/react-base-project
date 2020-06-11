@@ -1,0 +1,27 @@
+.nav-list{
+  display: flex;
+  flex-wrap: wrap;
+  a{
+    width:50%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    &.selected{
+      color:#f6bd60 ;
+    }
+    &:nth-child(1){
+      background-color:#0081a7 ;
+    }
+    &:nth-child(2){
+      background-color:#00afb9 ;
+    }
+    &:nth-child(3){
+      background-color:#ffa69e ;
+    }
+    &:nth-child(4){
+      background-color:#f07167 ;
+    }
+  }
+}

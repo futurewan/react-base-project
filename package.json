@@ -4,9 +4,10 @@
   "description": "a base react project",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config config/start.js",
-    "dev": "webpack-dev-server --config config/start.js",
-    "build": "node config/build.js",
+    "start": "cross-env NODE_ENV_MARK=dev webpack-dev-server --config config/start.js",
+    "dev": "cross-env NODE_ENV_MARK=dev webpack-dev-server --config config/start.js",
+    "build:prod": "cross-env NODE_ENV_MARK=production node config/build.js",
+    "build:test": "cross-env NODE_ENV_MARK=test node config/build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +30,8 @@
     "@babel/preset-react": "^7.9.4",
     "autoprefixer": "^9.7.6",
     "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "cross-env": "^7.0.2",
     "css-loader": "^3.5.3",
     "express": "^4.17.1",
     "file-loader": "^6.0.0",
@@ -46,7 +49,8 @@
   },
   "dependencies": {
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0"
   },
   "browserslist": [
     "iOS >= 8",

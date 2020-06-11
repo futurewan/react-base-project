@@ -1,6 +1,8 @@
 const paths = require('./paths');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const env = require(`../env/${process.env.NODE_ENV_MARK}.env`);
 
 module.exports = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
@@ -15,7 +17,7 @@ module.exports = function (webpackEnv) {
     entry: entry,
     output: {
       path: paths.appDist,
-      publicPath: './',
+      publicPath: '/',
       filename: `static/js/[name]${isEnvProduction ? '.[contenthash:8]' : ''}.js`,
     },
     module: {
@@ -36,7 +38,7 @@ module.exports = function (webpackEnv) {
               loader: 'url-loader',
               options: {
                 limit: 10000,
-                name: 'img/[name].[ext]?[hash]',
+                name: 'static/img/[name].[ext]?[hash]',
               },
             },
           ],
@@ -52,13 +54,17 @@ module.exports = function (webpackEnv) {
       ],
     },
     plugins: [
+      new webpack.DefinePlugin({
+        'process.env': env
+      }),
       new HtmlWebpackPlugin({
         filename: 'index.html',
         template: paths.appHtml,
         favicon: 'favicon.ico',
       }),
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
-    ],
+      !isEnvDevelopment && new CleanWebpackPlugin()
+    ].filter(Boolean),
     devServer: {
       publicPath: '/',
       host: '0.0.0.0',
@@ -68,6 +74,6 @@ module.exports = function (webpackEnv) {
       historyApiFallback: true,
       open: true,
       hot: true
-    },
+    }
   };
 };
