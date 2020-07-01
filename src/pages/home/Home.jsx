@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+
 import ReactImg from '../../assets/images/react-icon.png';
 import '../../assets/styles/home.scss';
 
@@ -25,7 +26,7 @@ export default class Home extends Component {
         <h1 className="tc">{name}</h1>
         <div className="nav-list">
           <NavLink activeClassName="selected" to="/home">首页</NavLink>
-          <Link to="/detail/1">详情页1</Link>
+          <Link to="/shopping">购物车</Link>
           <Link
             to={{
               pathname: "/detail/2",

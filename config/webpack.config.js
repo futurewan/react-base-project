@@ -65,6 +65,9 @@ module.exports = function (webpackEnv) {
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
       !isEnvDevelopment && new CleanWebpackPlugin()
     ].filter(Boolean),
+    resolve: {
+      extensions:['.js','.jsx','.json']
+    },
     devServer: {
       publicPath: '/',
       host: '0.0.0.0',

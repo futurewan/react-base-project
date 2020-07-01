@@ -1,0 +1,96 @@
+Arguments: 
+  /Users/futurewan/.nvm/versions/node/v10.16.0/bin/node /Users/futurewan/.nvm/versions/node/v10.16.0/bin/yarn add redux --save
+
+PATH: 
+  /Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/futurewan/.nvm/versions/node/v10.16.0/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/futurewan/flutter/bin:/Users/futurewan/flutter/bin
+
+Yarn version: 
+  1.17.3
+
+Node version: 
+  10.16.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: https://registry.npmjs.org/style-loader: ESOCKETTIMEDOUT
+      at ClientRequest.<anonymous> (/Users/futurewan/.nvm/versions/node/v10.16.0/lib/node_modules/yarn/lib/cli.js:141091:19)
+      at Object.onceWrapper (events.js:286:20)
+      at ClientRequest.emit (events.js:198:13)
+      at TLSSocket.emitRequestTimeout (_http_client.js:662:40)
+      at Object.onceWrapper (events.js:286:20)
+      at TLSSocket.emit (events.js:198:13)
+      at TLSSocket.Socket._onTimeout (net.js:442:8)
+      at ontimeout (timers.js:436:11)
+      at tryOnTimeout (timers.js:300:5)
+      at listOnTimeout (timers.js:263:5)
+
+npm manifest: 
+  {
+    "name": "react-base-project",
+    "version": "1.0.0",
+    "description": "a base react project",
+    "main": "index.js",
+    "scripts": {
+      "start": "cross-env NODE_ENV_MARK=dev webpack-dev-server --config config/start.js",
+      "dev": "cross-env NODE_ENV_MARK=dev webpack-dev-server --config config/start.js",
+      "build:prod": "cross-env NODE_ENV_MARK=production node config/build.js",
+      "build:test": "cross-env NODE_ENV_MARK=test node config/build.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/futurewan/react-base-project.git"
+    },
+    "keywords": [
+      "react"
+    ],
+    "author": "wanyafei",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/futurewan/react-base-project/issues"
+    },
+    "homepage": "https://github.com/futurewan/react-base-project#readme",
+    "devDependencies": {
+      "@babel/core": "^7.9.0",
+      "@babel/plugin-proposal-class-properties": "^7.8.3",
+      "@babel/preset-env": "^7.9.5",
+      "@babel/preset-react": "^7.9.4",
+      "autoprefixer": "^9.7.6",
+      "babel-loader": "^8.1.0",
+      "clean-webpack-plugin": "^3.0.0",
+      "cross-env": "^7.0.2",
+      "css-loader": "^3.5.3",
+      "express": "^4.17.1",
+      "file-loader": "^6.0.0",
+      "html-webpack-plugin": "^4.2.0",
+      "node-sass": "^4.14.1",
+      "ora": "^4.0.3",
+      "postcss-loader": "^3.0.0",
+      "react-hot-loader": "^4.12.21",
+      "sass-loader": "^8.0.2",
+      "style-loader": "^1.2.1",
+      "url-loader": "^4.1.0",
+      "webpack": "^4.42.1",
+      "webpack-cli": "^3.3.11",
+      "webpack-dev-server": "^3.10.3"
+    },
+    "dependencies": {
+      "react": "^16.13.1",
+      "react-dom": "^16.13.1",
+      "react-router-dom": "^5.2.0"
+    },
+    "browserslist": [
+      "iOS >= 8",
+      "> 1%",
+      "Android > 4",
+      "last 5 versions"
+    ]
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

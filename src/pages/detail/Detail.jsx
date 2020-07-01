@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import Counter from './components/Counter'
+import { createStore } from 'redux';
 
-export default class Contact extends Component {
+import counter from './reducers';
+const store = createStore(counter);
+
+export default class Detail extends Component {
   state={
     id:null
   }
@@ -16,6 +21,12 @@ export default class Contact extends Component {
     return (
       <div className="tc">
         <div>详情{id}</div>
+        <Counter 
+          value={store.getState()}
+          onIncrement={()=> store.dispatch({type:'INCREMENT'})}
+          onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
+
+        />
       </div>
     );
   }
