@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-
+import {logger} from '@util/log';
 import ReactImg from '../../assets/images/react-icon.png';
 import '../../assets/styles/home.scss';
+import {isArray} from 'lodash';
 
+console.log(isArray([1,2,3]))
 export default class Home extends Component {
   state = {
     count: 1,
@@ -18,6 +20,7 @@ export default class Home extends Component {
   };
   render() {
     const { name, count } = this.state;
+    logger('home');
     return (
       <div>
         <div>

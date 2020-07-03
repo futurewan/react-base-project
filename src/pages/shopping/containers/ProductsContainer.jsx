@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addToCart } from '../../../redux/actions/products'
 import ProductList from "../components/ProductList"
+import { isArray } from 'lodash';
 
+console.log(isArray([1,2,3]))
 const ProductsContainer = ({products,addToCart}) => (
   <ProductList title="Products">
     {products.map(product =>(

@@ -2,17 +2,29 @@ const paths = require('./paths');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin=require('mini-css-extract-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const os = require("os");
+const HappyPack = require("happypack");
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const smp = new SpeedMeasurePlugin();
+
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 const env = require(`../env/${process.env.NODE_ENV_MARK}.env`);
 
 module.exports = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
   const getStyleLoaders = () => {
-    const loaders = [isEnvDevelopment && 'style-loader', 'css-loader', 'postcss-loader', 'sass-loader'].filter(Boolean);
+    const loaders = [isEnvProduction?MiniCssExtractPlugin.loader:'style-loader','css-loader', 'postcss-loader', 'sass-loader'].filter(Boolean);
     return loaders;
   };
-  let entry = [paths.appIndex];
-  return {
+  let entry = {app:paths.appIndex};
+  let webpackConfig = {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     entry: entry,
     output: {
@@ -21,10 +33,13 @@ module.exports = function (webpackEnv) {
       filename: `static/js/[name]${isEnvProduction ? '.[contenthash:8]' : ''}.js`,
     },
     module: {
+      // noParse: /lodash/,
       rules: [
         {
           test: /\.jsx?$/,
-          loader: 'babel-loader',
+          loader: 'babel-loader?cacheDirectory=true',
+          include: paths.appSrc,
+          exclude: /node_modules/
         },
         {
           test: /\.(sc|c)ss$/,
@@ -51,7 +66,47 @@ module.exports = function (webpackEnv) {
             name: 'fonts/[name].[hash:7].[ext]',
           },
         },
+      ]
+    },
+    optimization: {
+      minimizer: [
+        new UglifyJsPlugin({
+        cache:true,
+        parallel:true,
+        sourceMap:true
+      }),
+      new OptimizeCSSAssetsPlugin()
       ],
+      splitChunks:{
+        cacheGroups:{
+          dll: {
+            chunks:'all',
+            test: /[\\/]node_modules[\\/](react|react-dom|react-redux|react-router-dom|redux)[\\/]/,
+            name: 'dll',
+            priority:100,
+            /* 为此缓存组创建块时，告诉webpack忽略minSize,minChunks,maxAsyncRequests,maxInitialRequests选项。*/
+            enforce: true,
+            reuseExistingChunk: true
+          },
+          lodash: {
+            chunks:'all',
+            test: /[\\/]node_modules[\\/](lodash)[\\/]/,
+            name: 'lodash',
+            priority: 90,
+            enforce: true,
+            reuseExistingChunk: true
+          },
+          commons: {
+            name: 'commons',
+            minChunks: 2,//Math.ceil(pages.length / 3), 当你有多个页面时，获取pages.length，至少被1/3页面的引入才打入common包
+            chunks:'all',
+            reuseExistingChunk: true
+        }
+        },
+        chunks: 'all',
+        name: true,
+      },
+      // runtimeChunk: true
     },
     plugins: [
       new webpack.DefinePlugin({
@@ -62,11 +117,33 @@ module.exports = function (webpackEnv) {
         template: paths.appHtml,
         favicon: 'favicon.ico',
       }),
+      new CopyWebpackPlugin({
+        patterns:[{
+          from:paths.appStatic,
+          to:'static/',
+        }]
+      }),
+      new HappyPack({
+        id: "happyBabel",
+        loaders: ["babel-loader?cacheDirectory=true"],
+        threadPool: happyThreadPool,
+        verbose: true
+      }),
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
-      !isEnvDevelopment && new CleanWebpackPlugin()
+      isEnvProduction && new CleanWebpackPlugin(),
+      isEnvProduction && new MiniCssExtractPlugin({
+          filename:'static/css/[name].[contenthash:10].css'
+      }),
+      process.env.NODE_ENV_REPORT && new BundleAnalyzerPlugin()
     ].filter(Boolean),
     resolve: {
-      extensions:['.js','.jsx','.json']
+      extensions:['.js','.jsx','.json'],
+      alias:{
+        '@redux':paths.appRedux,
+        '@pages':paths.appPages,
+        '@util':paths.util
+      }
+      // modules:['node_modules']
     },
     devServer: {
       publicPath: '/',
@@ -79,4 +156,9 @@ module.exports = function (webpackEnv) {
       hot: true
     }
   };
+
+  if(process.env.NODE_ENV_REPORT){
+    webpackConfig = smp.wrap(webpackConfig)
+  }
+  return webpackConfig;
 };

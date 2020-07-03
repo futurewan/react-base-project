@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import Home from '../pages/home/Home';
-import Contact from '../pages/contact/Contact';
-import Detail from '../pages/detail/Detail';
-import Shopping from '../pages/shopping/ShoppingPage'
+import Loadable from 'react-loadable';
+
+const loading = () => {
+  return ( 
+    <div> loading... </div>
+  )
+}
+const Home = Loadable({loader: () => import(/* webpackChunkName: "Home" */ '../pages/home/Home'),loading:loading});
+const Contact = Loadable({loader: () => import(/* webpackChunkName: "Contact" */ '../pages/contact/Contact'),loading:loading});
+const Detail = Loadable({loader: () => import(/* webpackChunkName: "Detail" */ '../pages/detail/Detail'),loading:loading});
+const Shopping = Loadable({loader: () => import(/* webpackChunkName: "ShoppingPage" */ '../pages/shopping/ShoppingPage'),loading:loading});
+
 
 export default class RouteConfig extends Component{
   render(){

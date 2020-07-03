@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Cart from '../components/Cart'
-import cart, * as fromCart from '../../../redux/reducers/cart'
-import product, * as fromProducts from '../../../redux/reducers/products'
+import cart, * as fromCart from '@redux/reducers/cart'
+import product, * as fromProducts from '@redux/reducers/products'
 import ProductList from "../components/ProductList"
-import { checkout } from '../../../redux/actions/cart'
+import { checkout } from '@redux/actions/cart'
 
 
 const getAddedIds = state => fromCart.getAddedIds(state.cart)
