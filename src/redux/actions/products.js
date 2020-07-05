@@ -5,10 +5,10 @@ const receiveProducts = (products) => ({
   products,
 });
 
-const addToCartUnsafe = productId => ({
+const addToCartUnsafe = (productId) => ({
   type: 'ADD_TO_CART',
-  productId
-})
+  productId,
+});
 
 export const getAllProducts = () => (dispatch) => {
   shop.getProducts((products) => {
@@ -16,8 +16,8 @@ export const getAllProducts = () => (dispatch) => {
   });
 };
 
-export const addToCart = productId => (dispatch, getState) => {
-  if (getState().products.find(item=>item.id === productId).inventory > 0) {
-    dispatch(addToCartUnsafe(productId))
+export const addToCart = (productId) => (dispatch, getState) => {
+  if (getState().products.find((item) => item.id === productId).inventory > 0) {
+    dispatch(addToCartUnsafe(productId));
   }
-}
+};

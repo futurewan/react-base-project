@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Cart = ({ products, total, onCheckoutClicked }) => {
+const Cart = ({ products }) => {
   const hasProducts = products.length > 0;
-  const nodes = hasProducts ? products.map((product) => 
-    <div key={product.id}>
-      {product.title} - &#36;{product.price}{product.quantity ? ` x ${product.quantity}` : null}
-    </div>
-  
-  ) : <em>Please add some products to cart.</em>;
+  const nodes = hasProducts ? (
+    products.map((product) => (
+      <div key={product.id}>
+        {product.title}
+        {' '}
+        - &#36;
+        {product.price}
+        {product.quantity ? ` x ${product.quantity}` : null}
+      </div>
+    ))
+  ) : (
+    <em>Please add some products to cart.</em>
+  );
   return (
     <div>
       <h3>Your Cart</h3>
@@ -17,10 +24,10 @@ const Cart = ({ products, total, onCheckoutClicked }) => {
   );
 };
 
-
 Cart.propTypes = {
-  products: PropTypes.array,
-  total: PropTypes.string,
-  onCheckoutClicked: PropTypes.func
-}
+  products: PropTypes.arrayOf.isRequired(),
+};
+Cart.defaultProps = {
+  products: [],
+};
 export default Cart;
