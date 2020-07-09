@@ -10,6 +10,7 @@ module.exports = {
   globals: {},
   extends: [
     'airbnb',
+    'plugin:prettier/recommended',
     // "eslint:recommended",
     // "plugin:react/recommended"
   ],
@@ -24,6 +25,7 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'react/button-has-type': 'off',
+    'react/prefer-stateless-function': 'off',
   },
   settings: {
     react: {

@@ -7,8 +7,7 @@ const Cart = ({ products }) => {
     products.map((product) => (
       <div key={product.id}>
         {product.title}
-        {' '}
-        - &#36;
+        {'- &#36;'}
         {product.price}
         {product.quantity ? ` x ${product.quantity}` : null}
       </div>

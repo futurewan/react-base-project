@@ -1,22 +1,39 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Detail extends Component {
-  state={
-    id:null
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: null,
+    };
   }
-  componentDidMount(){
-    console.log(this.props)
+
+  componentDidMount() {
+    console.log(this.props);
+    const { match } = this.props;
     this.setState({
-      id:this.props.match.params.id
-    })
+      id: match.params.id,
+    });
   }
 
   render() {
-    const { id } =this.state; 
+    const { id } = this.state;
     return (
       <div className="tc">
-        <div>详情{id}</div>
+        <div>
+          {'详情'}
+          {id}
+        </div>
       </div>
     );
   }
 }
+
+Detail.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.number,
+    }),
+  }).isRequired,
+};

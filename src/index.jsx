@@ -6,4 +6,9 @@ import store from './redux/index';
 
 const rootEl = document.getElementById('root');
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, rootEl);
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  rootEl
+);

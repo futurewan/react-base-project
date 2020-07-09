@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as fromCart from '@redux/reducers/cart';
 import * as fromProducts from '@redux/reducers/products';
@@ -8,17 +9,18 @@ const getAddedIds = (state) => fromCart.getAddedIds(state.cart);
 const getQuantity = (state, id) => fromCart.getQuantity(state.cart, id);
 const getProduct = (state, id) => fromProducts.getProduct(state.products, id);
 
-export const getTotal = (state) => getAddedIds(state)
-  .reduce((total, id) => total + getProduct(state, id).price * getQuantity(state, id),
-    0)
-  .toFixed(2);
+export const getTotal = (state) =>
+  getAddedIds(state)
+    .reduce((total, id) => total + getProduct(state, id).price * getQuantity(state, id), 0)
+    .toFixed(2);
 
-export const getCartProducts = (state) => getAddedIds(state).map((id) => ({
-  ...getProduct(state, id),
-  quantity: getQuantity(state, id),
-}));
+export const getCartProducts = (state) =>
+  getAddedIds(state).map((id) => ({
+    ...getProduct(state, id),
+    quantity: getQuantity(state, id),
+  }));
 
-const ProductsContainer = ({ products }) => (
+const CartContainer = ({ products }) => (
   <Cart
     products={products}
     // total={total}
@@ -30,6 +32,12 @@ const mapStateToProps = (state) => ({
   products: getCartProducts(state),
 });
 
+CartContainer.propTypes = {
+  products: PropTypes.arrayOf.isRequired(),
+};
+CartContainer.defaultProps = {
+  products: [],
+};
 console.log(mapStateToProps);
 
-export default connect(mapStateToProps)(ProductsContainer);
+export default connect(mapStateToProps)(CartContainer);

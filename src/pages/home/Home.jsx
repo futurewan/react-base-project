@@ -7,10 +7,13 @@ import '../../assets/styles/home.scss';
 
 console.log(isArray([1, 2, 3]));
 export default class Home extends Component {
-  state = {
-    count: 1,
-    name: 'Hello React',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 1,
+      name: 'Hello React',
+    };
+  }
 
   addCount = () => {
     this.setState((preState) => ({
@@ -28,7 +31,9 @@ export default class Home extends Component {
         </div>
         <h1 className="tc">{name}</h1>
         <div className="nav-list">
-          <NavLink activeClassName="selected" to="/home">首页</NavLink>
+          <NavLink activeClassName="selected" to="/home">
+            首页
+          </NavLink>
           <Link to="/shopping">购物车</Link>
           <Link
             to={{
@@ -39,7 +44,6 @@ export default class Home extends Component {
             }}
           >
             详情页2
-
           </Link>
           <Link to="/contact">联系我们</Link>
         </div>
