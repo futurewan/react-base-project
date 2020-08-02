@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
+    "jsx": "react",
     "paths": {
       "@redux/*": ["src/redux/*"],
-      "@pages/*":["src/pages/*"],
-      "@util/*":["src/util/*"]
+      "@pages/*": ["src/pages/*"],
+      "@util/*": ["src/util/*"]
     }
-  }
+  },
+  "exclude": ["node_modules", "dist"]
 }

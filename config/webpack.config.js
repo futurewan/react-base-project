@@ -45,7 +45,7 @@ module.exports = function (webpackEnv) {
         {
           test: /\.(sc|c)ss$/,
           use: getStyleLoaders(),
-          exclude: /node_modules/,
+          // exclude: /node_modules/,
         },
         {
           test: /\.(gif|png|jpe?g|svg)(\?.*)?$/,

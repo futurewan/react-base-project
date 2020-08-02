@@ -24,7 +24,7 @@ const Cart = ({ products }) => {
 };
 
 Cart.propTypes = {
-  products: PropTypes.arrayOf.isRequired(),
+  products: PropTypes.arrayOf(PropTypes.any),
 };
 Cart.defaultProps = {
   products: [],

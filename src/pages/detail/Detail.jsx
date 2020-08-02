@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import './detail.scss';
+
 export default class Detail extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +26,10 @@ export default class Detail extends Component {
         <div>
           {'详情'}
           {id}
+        </div>
+        <div className="box">
+          <div className="left"> </div>
+          <div className="right"> </div>
         </div>
       </div>
     );

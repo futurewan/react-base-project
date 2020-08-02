@@ -30,7 +30,7 @@ const ProductsContainer = ({ products, handleAddToCart }) => (
 );
 
 ProductsContainer.propTypes = {
-  products: PropTypes.arrayOf.isRequired(),
+  products: PropTypes.arrayOf(PropTypes.any),
   handleAddToCart: PropTypes.func.isRequired,
 };
 ProductsContainer.defaultProps = {

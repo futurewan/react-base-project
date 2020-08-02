@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { logger } from '@util/log';
 import { isArray } from 'lodash';
+
+import 'react-region-picker/lib/style.css';
+
 import ReactImg from '../../assets/images/react-icon.png';
 import '../../assets/styles/home.scss';
 

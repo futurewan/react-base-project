@@ -33,7 +33,7 @@ const mapStateToProps = (state) => ({
 });
 
 CartContainer.propTypes = {
-  products: PropTypes.arrayOf.isRequired(),
+  products: PropTypes.arrayOf(PropTypes.any),
 };
 CartContainer.defaultProps = {
   products: [],

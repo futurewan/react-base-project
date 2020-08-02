@@ -1,0 +1,21 @@
+.left {
+  background: #73de80; /* 绿色 */
+  opacity: 0.5;
+  border: 3px solid #f31264;
+  width: 200px;
+  height: 200px;
+  float: left;
+}
+.right {
+  /* 粉色 */
+  background: #ef5be2;
+  opacity: 0.5;
+  border: 3px solid #f31264;
+  width: 400px;
+  min-height: 100px;
+}
+.box {
+  background: #888;
+  height: 100%;
+  margin-left: 50px;
+}
