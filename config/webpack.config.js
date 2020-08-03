@@ -1,4 +1,3 @@
-const paths = require('./paths');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -13,6 +12,7 @@ const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 const smp = new SpeedMeasurePlugin();
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const paths = require('./paths');
 
 const env = require(`../env/${process.env.NODE_ENV_MARK}.env`);
 
@@ -23,11 +23,11 @@ module.exports = function (webpackEnv) {
     const loaders = [isEnvProduction ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader', 'postcss-loader', 'sass-loader'].filter(Boolean);
     return loaders;
   };
-  let entry = { app: paths.appIndex };
+  const entry = { app: paths.appIndex };
   let webpackConfig = {
     devtool: isEnvDevelopment ? 'cheap-module-eval-source-map' : 'source-map',
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
-    entry: entry,
+    entry,
     output: {
       path: paths.appDist,
       publicPath: '/',
@@ -71,11 +71,11 @@ module.exports = function (webpackEnv) {
     },
     optimization: {
       minimizer: [
-        new UglifyJsPlugin({
-          cache: true,
-          parallel: true,
-          sourceMap: true,
-        }),
+        // new UglifyJsPlugin({
+        //   cache: true,
+        //   parallel: true,
+        //   sourceMap: true,
+        // }),
         new OptimizeCSSAssetsPlugin(),
       ],
       splitChunks: {
@@ -99,7 +99,7 @@ module.exports = function (webpackEnv) {
           },
           commons: {
             name: 'commons',
-            minChunks: 2, //Math.ceil(pages.length / 3), 当你有多个页面时，获取pages.length，至少被1/3页面的引入才打入common包
+            minChunks: 2, // Math.ceil(pages.length / 3), 当你有多个页面时，获取pages.length，至少被1/3页面的引入才打入common包
             chunks: 'all',
             reuseExistingChunk: true,
           },
