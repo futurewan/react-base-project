@@ -1,16 +1,17 @@
 // import { combineReducers } from 'redux';
 // 商品列表数据
+import { ProductInterface } from '../../interfaces/product';
 
-export default (state = [], action) => {
+export default (state = [], action: any) => {
   switch (action.type) {
     case 'RECEIVE_PRODUCTS':
       return action.products;
     case 'ADD_TO_CART': {
       const { productId } = action;
       return state.map((item) => {
-        const Item = item;
+        const Item: ProductInterface = item;
         if (Item.id === productId) {
-          Item.inventory -= 1;
+          Item.inventory = Number(Item.inventory) - 1;
         }
         return Item;
       });
@@ -20,4 +21,4 @@ export default (state = [], action) => {
   }
 };
 
-export const getProduct = (state, id) => state.find((item) => item.id === id);
+export const getProduct = (state: any, id: Number) => state.find((item: ProductInterface) => item.id === id);

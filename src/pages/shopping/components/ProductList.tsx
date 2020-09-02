@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+interface PropsInterface {
+  title: String;
+  children: React.ReactChild;
+}
 
-const ProductsList = ({ title, children }) => (
+const ProductsList = ({ title, children }: PropsInterface) => (
   <div>
     <h3>{title}</h3>
     <div>{children}</div>
   </div>
 );
-
-ProductsList.propTypes = {
-  children: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired,
-};
 
 export default ProductsList;

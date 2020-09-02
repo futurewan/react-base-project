@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { isArray } from 'lodash';
 import { addToCart } from '../../../redux/actions/products';
 import ProductList from '../components/ProductList';
+import { ProductInterface } from '@interfaces/product';
 
 console.log(isArray([1, 2, 3]));
-const ProductsContainer = ({ products, handleAddToCart }) => (
+const ProductsContainer = ({ products, handleAddToCart }: any) => (
   <ProductList title="Products">
-    {products.map((product) => (
-      <div style={{ marginBottom: 20 }} key={product.id}>
+    {products.map((product: ProductInterface) => (
+      <div style={{ marginBottom: 20 }} key={'product' + product.id}>
         <div>
           {product.title}
           {'- &#36;'}
@@ -20,7 +21,7 @@ const ProductsContainer = ({ products, handleAddToCart }) => (
           onClick={() => {
             handleAddToCart(product.id);
           }}
-          disabled={product.inventory > 0 ? '' : 'disabled'}
+          disabled={product.inventory > 0 ? false : true}
         >
           {product.inventory > 0 ? 'Add to cart' : 'Sold Out'}
         </button>
@@ -37,7 +38,7 @@ ProductsContainer.defaultProps = {
   products: [],
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
   products: state.products,
 });
 

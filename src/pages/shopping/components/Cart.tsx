@@ -1,11 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { ProductInterface } from '@interfaces/product';
+interface ProductProps {
+  products: Array<ProductInterface>;
+}
 
-const Cart = ({ products }) => {
+const Cart = ({ products }: ProductProps) => {
   const hasProducts = products.length > 0;
   const nodes = hasProducts ? (
-    products.map((product) => (
-      <div key={product.id}>
+    products.map((product: ProductInterface) => (
+      <div key={'products' + product.id}>
         {product.title}
         {'- &#36;'}
         {product.price}
@@ -23,9 +26,6 @@ const Cart = ({ products }) => {
   );
 };
 
-Cart.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.any),
-};
 Cart.defaultProps = {
   products: [],
 };

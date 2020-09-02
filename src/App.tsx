@@ -1,5 +1,6 @@
 import { hot } from 'react-hot-loader/root';
 import React, { Component } from 'react';
+
 import Routes from './routes/index';
 import './assets/styles/app.scss';
 

@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { logger } from '@util/log';
-import { isArray } from 'lodash';
 
 import 'react-region-picker/lib/style.css';
 
 import ReactImg from '../../assets/images/react-icon.png';
 import '../../assets/styles/home.scss';
 
-console.log(isArray([1, 2, 3]));
-export default class Home extends Component {
-  constructor(props) {
+interface HomeState {
+  count: number;
+  name: string;
+}
+
+export default class Home extends Component<{}, HomeState> {
+  constructor(props: any) {
     super(props);
     this.state = {
       count: 1,

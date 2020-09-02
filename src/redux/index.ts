@@ -5,7 +5,7 @@ import { createLogger } from 'redux-logger';
 import reducers from './reducers/index';
 import { getAllProducts } from './actions/products';
 
-const middleware = [thunk];
+const middleware: Array<any> = [thunk];
 if (process.env.NODE_ENV !== 'production') {
   middleware.push(createLogger());
 }

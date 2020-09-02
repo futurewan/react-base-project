@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { RouteComponentProps } from 'react-router-dom';
 
 import './detail.scss';
 
-export default class Detail extends Component {
-  constructor(props) {
+interface DetailState {
+  id: string;
+}
+interface RouteParams {
+  id: string;
+}
+interface DetailProps extends RouteComponentProps<RouteParams> {}
+
+export default class Detail extends Component<DetailProps, DetailState> {
+  constructor(props: any) {
     super(props);
     this.state = {
-      id: null,
+      id: '',
     };
   }
 
@@ -24,7 +32,7 @@ export default class Detail extends Component {
     return (
       <div className="tc">
         <div>
-          {'详情'}
+          <span>详情</span>
           {id}
         </div>
         <div className="box">
@@ -35,11 +43,3 @@ export default class Detail extends Component {
     );
   }
 }
-
-Detail.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.number,
-    }),
-  }).isRequired,
-};

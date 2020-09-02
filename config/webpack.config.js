@@ -37,8 +37,8 @@ module.exports = function (webpackEnv) {
       // noParse: /lodash/,
       rules: [
         {
-          test: /\.jsx?$/,
-          loader: 'babel-loader?cacheDirectory=true',
+          test: /\.tsx?$/,
+          loader: 'ts-loader',
           include: paths.appSrc,
           exclude: /node_modules/,
         },
@@ -141,11 +141,12 @@ module.exports = function (webpackEnv) {
       process.env.NODE_ENV_REPORT && new BundleAnalyzerPlugin(),
     ].filter(Boolean),
     resolve: {
-      extensions: ['.js', '.jsx', '.json'],
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
       alias: {
         '@redux': paths.appRedux,
         '@pages': paths.appPages,
         '@util': paths.util,
+        '@interfaces': paths.interfaces,
       },
       // modules:['node_modules']
     },

@@ -1,7 +1,7 @@
 const paths = require('./config/paths');
 
 module.exports = {
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
   env: {
     browser: true,
     es2020: true,
@@ -9,10 +9,10 @@ module.exports = {
   },
   globals: {},
   extends: [
-    'airbnb',
+    // 'airbnb',
+    'plugin:react/recommended',
     'plugin:prettier/recommended',
     // "eslint:recommended",
-    // "plugin:react/recommended"
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -21,11 +21,12 @@ module.exports = {
     ecmaVersion: 6,
     sourceType: 'module',
   },
-  plugins: ['react'],
+  plugins: ['react', '@typescript-eslint'],
   rules: {
     'no-console': 'off',
     'react/button-has-type': 'off',
     'react/prefer-stateless-function': 'off',
+    'react/jsx-filename-extension': [2, { extensions: ['.tsx', '.ts'] }],
   },
   settings: {
     react: {
@@ -36,8 +37,12 @@ module.exports = {
         map: [
           ['@redux', paths.appRedux],
           ['@pages', paths.appPages],
-          ['@util', paths.util],
+          ['@util', './src/util/'],
         ],
+      },
+      node: {
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+        moduleDirectory: ['node_modules', 'src/'],
       },
     },
   },
