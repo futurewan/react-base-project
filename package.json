@@ -9,8 +9,8 @@
     "build:prod": "cross-env NODE_ENV_MARK=production node config/build.js",
     "build:test": "cross-env NODE_ENV_MARK=test node config/build.js",
     "analyze": "cross-env NODE_ENV_REPORT=true npm run build:prod",
-    "lint": "eslint src --ext js,jsx && stylelint \"./src/**/*.scss\"",
-    "format": "prettier --write \"src/**/*.{js,jsx,css,json}\"",
+    "lint": "eslint src --ext ts,tsx,js,jsx && stylelint \"./src/**/*.scss\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,json}\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "husky": {
