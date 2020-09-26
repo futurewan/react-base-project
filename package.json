@@ -78,6 +78,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.11.5",
     "@babel/runtime": "^7.11.0",
     "@babel/runtime-corejs3": "^7.11.0",
     "core-js": "^3.6.5",

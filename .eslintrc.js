@@ -18,7 +18,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 6,
+    ecmaVersion: 9,
     sourceType: 'module',
   },
   plugins: ['react'],
@@ -26,6 +26,7 @@ module.exports = {
     'no-console': 'off',
     'react/button-has-type': 'off',
     'react/prefer-stateless-function': 'off',
+    'prefer-object-spread': 'off',
   },
   settings: {
     react: {

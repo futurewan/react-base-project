@@ -12,6 +12,10 @@ export default class Detail extends Component {
   }
 
   componentDidMount() {
+    const obj1 = { name: 1 };
+    const obj2 = Object.assign({}, obj1, { age: 10 });
+
+    console.log(obj2, obj1);
     console.log(this.props);
     const { match } = this.props;
     this.setState({
@@ -39,7 +43,7 @@ export default class Detail extends Component {
 Detail.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
     }),
   }).isRequired,
 };
