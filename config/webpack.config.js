@@ -102,7 +102,7 @@ module.exports = function (webpackEnv) {
       // runtimeChunk: true
     },
     performance: {
-      // false | "error" | "warning" // 不显示性能提示 | 以错误形式提示 | 以警告...
+      // false | "error" | "warning" // 不显示性能提示 | 以错误形式提示 | 以警告形式提示
       hints: isEnvProduction ? 'warning' : false,
       // 开发环境设置较大防止警告
       // 根据入口起点的最大体积，控制webpack何时生成性能提示,整数类型,以字节为单位
