@@ -20,6 +20,10 @@ export default class Detail extends Component<DetailProps, DetailState> {
   }
 
   componentDidMount() {
+    const obj1 = { name: 1 };
+    const obj2 = Object.assign({}, obj1, { age: 10 });
+
+    console.log(obj2, obj1);
     console.log(this.props);
     const { match } = this.props;
     this.setState({

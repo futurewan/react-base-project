@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { isArray } from 'lodash';
 import { addToCart } from '../../../redux/actions/products';
 import ProductList from '../components/ProductList';
 import { ProductInterface } from '@interfaces/product';
 
-console.log(isArray([1, 2, 3]));
-const ProductsContainer = ({ products, handleAddToCart }: any) => (
+const ProductsContainer = ({ products, handleAddToCart }) => (
   <ProductList title="Products">
     {products.map((product: ProductInterface) => (
       <div style={{ marginBottom: 20 }} key={'product' + product.id}>

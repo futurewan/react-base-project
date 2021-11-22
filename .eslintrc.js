@@ -18,7 +18,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 6,
+    ecmaVersion: 9,
     sourceType: 'module',
   },
   plugins: ['react', '@typescript-eslint'],
@@ -37,12 +37,12 @@ module.exports = {
         map: [
           ['@redux', paths.appRedux],
           ['@pages', paths.appPages],
-          ['@util', './src/util/'],
+          ['@util', paths.appUtil],
         ],
       },
       node: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
-        moduleDirectory: ['node_modules', 'src/'],
+        moduleDirectory: ['/node_modules', 'src/'],
       },
     },
   },

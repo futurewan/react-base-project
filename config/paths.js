@@ -12,6 +12,6 @@ module.exports = {
   appRedux: resolveApp('src/redux'), //项目redux目录
   appPages: resolveApp('src/pages'),
   appStatic: resolveApp('src/static'),
-  util: resolveApp('src/util'),
-  interfaces: resolveApp('src/interfaces'),
+  appUtil: resolveApp('src/util'),
+  appNodeModules: resolveApp('node_modules'),
 };
