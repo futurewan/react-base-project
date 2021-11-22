@@ -71,11 +71,11 @@ module.exports = function (webpackEnv) {
     },
     optimization: {
       minimizer: [
-        // new UglifyJsPlugin({
-        //   cache: true,
-        //   parallel: true,
-        //   sourceMap: true,
-        // }),
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          sourceMap: true,
+        }),
         new OptimizeCSSAssetsPlugin(),
       ],
       splitChunks: {
@@ -122,11 +122,12 @@ module.exports = function (webpackEnv) {
       new webpack.DefinePlugin({
         'process.env': env,
       }),
-      new HtmlWebpackPlugin({
-        filename: 'index.html',
-        template: paths.appHtml,
-        favicon: 'favicon.ico',
-      }),
+      isEnvProduction &&
+        new HtmlWebpackPlugin({
+          filename: 'index.html',
+          template: paths.appHtml,
+          favicon: 'favicon.ico',
+        }),
       new CopyWebpackPlugin({
         patterns: [
           {
