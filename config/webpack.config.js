@@ -23,10 +23,11 @@ module.exports = function (webpackEnv) {
     const loaders = [isEnvProduction ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader', 'postcss-loader', 'sass-loader'].filter(Boolean);
     return loaders;
   };
+
   const entry = { app: paths.appIndex };
   let webpackConfig = {
     devtool: isEnvDevelopment ? 'cheap-module-eval-source-map' : 'source-map',
-    mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
+    mode: isEnvProduction ? 'production' : 'development',
     entry,
     output: {
       path: paths.appDist,
@@ -45,7 +46,6 @@ module.exports = function (webpackEnv) {
         {
           test: /\.(sc|c)ss$/,
           use: getStyleLoaders(),
-          // exclude: /node_modules/,
         },
         {
           test: /\.(gif|png|jpe?g|svg)(\?.*)?$/,
@@ -111,12 +111,12 @@ module.exports = function (webpackEnv) {
     },
     performance: {
       // false | "error" | "warning" // 不显示性能提示 | 以错误形式提示 | 以警告...
-      hints: 'warning',
+      hints: isEnvProduction ? 'warning' : false,
       // 开发环境设置较大防止警告
       // 根据入口起点的最大体积，控制webpack何时生成性能提示,整数类型,以字节为单位
-      maxEntrypointSize: 5000000,
+      maxEntrypointSize: 250000,
       // 最大单个资源体积，默认250000 (bytes)
-      maxAssetSize: 3000000,
+      maxAssetSize: 250000,
     },
     plugins: [
       new webpack.DefinePlugin({
@@ -156,7 +156,7 @@ module.exports = function (webpackEnv) {
         '@pages': paths.appPages,
         '@util': paths.util,
       },
-      // modules:['node_modules']
+      modules: ['node_modules', paths.appNodeModules], // 默认是当前目录下的 node_modules
     },
     devServer: {
       publicPath: '/',
