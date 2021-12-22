@@ -7,7 +7,6 @@ const Contact = React.lazy(() => import(/* webpackChunkName: "Contact" */ '../pa
 const Detail = React.lazy(() => import(/* webpackChunkName: "Detail" */ '../pages/detail/Detail'));
 const Shopping = React.lazy(() => import(/* webpackChunkName: "ShoppingPage" */ '../pages/shopping/ShoppingPage'));
 
-console.log('Shopping', [1, 2, 3].includes(1));
 const RouteConfig = () => (
   <BrowserRouter basename="/">
     <Suspense fallback={Loading}>

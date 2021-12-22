@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 interface PropsInterface {
   title: String;
-  children: React.ReactChild;
+  children: React.ReactNode;
 }
 
 const ProductsList = ({ title, children }: PropsInterface) => (

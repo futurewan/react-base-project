@@ -13,5 +13,6 @@ module.exports = {
   appPages: resolveApp('src/pages'),
   appStatic: resolveApp('src/static'),
   appUtil: resolveApp('src/util'),
+  appInterfaces: resolveApp('src/interfaces'),
   appNodeModules: resolveApp('node_modules'),
 };

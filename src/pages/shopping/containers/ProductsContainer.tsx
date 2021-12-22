@@ -5,7 +5,12 @@ import { addToCart } from '../../../redux/actions/products';
 import ProductList from '../components/ProductList';
 import { ProductInterface } from '@interfaces/product';
 
-const ProductsContainer = ({ products, handleAddToCart }) => (
+interface PropsInterface {
+  products: Array<ProductInterface>;
+  handleAddToCart: Function;
+}
+
+const ProductsContainer = ({ products, handleAddToCart }: PropsInterface) => (
   <ProductList title="Products">
     {products.map((product: ProductInterface) => (
       <div style={{ marginBottom: 20 }} key={'product' + product.id}>
@@ -27,14 +32,6 @@ const ProductsContainer = ({ products, handleAddToCart }) => (
     ))}
   </ProductList>
 );
-
-ProductsContainer.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.any),
-  handleAddToCart: PropTypes.func.isRequired,
-};
-ProductsContainer.defaultProps = {
-  products: [],
-};
 
 const mapStateToProps = (state: any) => ({
   products: state.products,

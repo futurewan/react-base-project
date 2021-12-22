@@ -79,6 +79,9 @@ module.exports = function (webpackEnv) {
         new OptimizeCSSAssetsPlugin(),
       ],
       splitChunks: {
+        chunks: 'all',
+        // name: true,
+        minChunks: 2,
         cacheGroups: {
           dll: {
             chunks: 'all',
@@ -96,8 +99,6 @@ module.exports = function (webpackEnv) {
             reuseExistingChunk: true,
           },
         },
-        chunks: 'all',
-        name: true,
       },
       // runtimeChunk: true
     },
@@ -114,12 +115,33 @@ module.exports = function (webpackEnv) {
       new webpack.DefinePlugin({
         'process.env': env,
       }),
-      isEnvProduction &&
-        new HtmlWebpackPlugin({
-          filename: 'index.html',
-          template: paths.appHtml,
-          favicon: 'favicon.ico',
-        }),
+      new HtmlWebpackPlugin(
+        Object.assign(
+          {},
+          {
+            inject: true,
+            filename: 'index.html',
+            template: paths.appHtml,
+            favicon: 'favicon.ico',
+          },
+          isEnvProduction
+            ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+                },
+              }
+            : undefined
+        )
+      ),
       new CopyWebpackPlugin({
         patterns: [
           {
@@ -148,7 +170,7 @@ module.exports = function (webpackEnv) {
         '@redux': paths.appRedux,
         '@pages': paths.appPages,
         '@util': paths.appUtil,
-        '@interfaces': paths.interfaces,
+        '@interfaces': paths.appInterfaces,
       },
       modules: ['node_modules', paths.appNodeModules], // 默认是当前目录下的 node_modules
     },
