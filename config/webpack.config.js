@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const os = require('os');
 const HappyPack = require('happypack');
@@ -14,19 +14,30 @@ const smp = new SpeedMeasurePlugin();
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const paths = require('./paths');
 
-const env = require(`../env/${process.env.NODE_ENV_MARK}.env`);
+const cientEnvironment = require('./env');
+const env = cientEnvironment();
 
 module.exports = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
-  const getStyleLoaders = () => {
-    const loaders = [isEnvProduction ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader', 'postcss-loader', 'sass-loader'].filter(Boolean);
-    return loaders;
-  };
+  const getStyleLoaders = () =>
+    [
+      isEnvProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+      {
+        loader: 'css-loader',
+        options: {
+          modules: {
+            localIdentName: '[name]-[local]-[hash:base64:5]',
+          },
+        },
+      },
+      'postcss-loader',
+      'sass-loader',
+    ].filter(Boolean);
 
   const entry = { app: paths.appIndex };
   let webpackConfig = {
-    devtool: isEnvDevelopment ? 'cheap-module-eval-source-map' : 'source-map',
+    devtool: isEnvDevelopment ? 'inline-source-map' : 'source-map',
     mode: isEnvProduction ? 'production' : 'development',
     entry,
     output: {
@@ -39,7 +50,7 @@ module.exports = function (webpackEnv) {
       rules: [
         {
           test: /\.tsx?$/,
-          loader: 'ts-loader',
+          loader: 'babel-loader',
           include: paths.appSrc,
           exclude: /node_modules/,
         },
@@ -49,32 +60,37 @@ module.exports = function (webpackEnv) {
         },
         {
           test: /\.(gif|png|jpe?g|svg)(\?.*)?$/,
-          use: [
-            {
-              loader: 'url-loader',
-              options: {
-                limit: 10000,
-                name: 'static/img/[name].[ext]?[hash]',
-              },
+          type: 'asset',
+          generator: {
+            filename: 'static/img/[name].[ext]?[hash]',
+          },
+          parser: {
+            dataUrlCondition: {
+              maxSize: 10 * 1024,
             },
-          ],
+          },
         },
         {
           test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            name: 'fonts/[name].[hash:7].[ext]',
+          type: 'asset/resource',
+          generator: {
+            filename: 'fonts/[name].[hash:7].[ext]',
           },
         },
       ],
     },
     optimization: {
+      minimize: true,
       minimizer: [
-        new UglifyJsPlugin({
-          cache: true,
-          parallel: true,
-          sourceMap: true,
+        new TerserPlugin({
+          terserOptions: {
+            compress: {
+              inline: 2,
+            },
+            output: {
+              comments: false,
+            },
+          },
         }),
         new OptimizeCSSAssetsPlugin(),
       ],
@@ -112,9 +128,7 @@ module.exports = function (webpackEnv) {
       maxAssetSize: 250000,
     },
     plugins: [
-      new webpack.DefinePlugin({
-        'process.env': env,
-      }),
+      new webpack.DefinePlugin(env),
       new HtmlWebpackPlugin(
         Object.assign(
           {},
@@ -146,18 +160,22 @@ module.exports = function (webpackEnv) {
         patterns: [
           {
             from: paths.appStatic,
-            to: 'static/',
+            to: 'static',
           },
         ],
       }),
-      new HappyPack({
-        id: 'happyBabel',
-        loaders: ['babel-loader?cacheDirectory=true'],
-        threadPool: happyThreadPool,
-        verbose: true,
-      }),
+      new webpack.ProgressPlugin(),
+      // new HappyPack({
+      //   id: 'happyBabel',
+      //   loaders: ['babel-loader?cacheDirectory=true'],
+      //   threadPool: happyThreadPool,
+      //   verbose: true,
+      // }),
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
-      isEnvProduction && new CleanWebpackPlugin(),
+      isEnvProduction &&
+        new CleanWebpackPlugin({
+          verbose: true,
+        }),
       isEnvProduction &&
         new MiniCssExtractPlugin({
           filename: 'static/css/[name].[contenthash:10].css',
@@ -175,11 +193,12 @@ module.exports = function (webpackEnv) {
       modules: ['node_modules', paths.appNodeModules], // 默认是当前目录下的 node_modules
     },
     devServer: {
-      publicPath: '/',
+      // contentBase: './',
       host: '0.0.0.0',
-      disableHostCheck: true,
+      // disableHostCheck: true,
+      allowedHosts: 'all',
       compress: true,
-      port: 9001,
+      port: 9008,
       historyApiFallback: true,
       open: true,
       hot: true,

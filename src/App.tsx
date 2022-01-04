@@ -13,5 +13,6 @@ class App extends Component {
     );
   }
 }
+console.log('process.env', process.env);
 const appComponent = process.env.NODE_ENV === 'development' ? hot(App) : App;
 export default appComponent;

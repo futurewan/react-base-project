@@ -5,7 +5,7 @@ const spinner = ora('building for production...');
 const config = configFactory('production');
 
 spinner.start();
-const compiler = webpack(config,(err, stats)=>{
+const compiler = webpack(config, (err, stats) => {
   if (err) {
     throw err;
   }
@@ -15,7 +15,7 @@ const compiler = webpack(config,(err, stats)=>{
       modules: false,
       children: false,
       chunks: false,
-      chunkModules: false
+      chunkModules: false,
     }) + '\n'
   );
   spinner.succeed('build success');

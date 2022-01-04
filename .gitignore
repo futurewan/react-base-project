@@ -5,3 +5,9 @@ dist/
 npm-debug.log
 yarn.lock
 package-lock.json
+
+
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
