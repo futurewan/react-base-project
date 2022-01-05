@@ -5,6 +5,7 @@ import './detail.scss';
 
 interface DetailState {
   id: string;
+  num: number;
 }
 interface RouteParams {
   id: string;
@@ -16,6 +17,7 @@ export default class Detail extends Component<DetailProps, DetailState> {
     super(props);
     this.state = {
       id: '',
+      num: 1,
     };
   }
 
@@ -34,13 +36,20 @@ export default class Detail extends Component<DetailProps, DetailState> {
   render() {
     const { id } = this.state;
     return (
-      <div className="tc">
+      <div
+        onClick={() => {
+          this.setState((state) => {
+            return { num: state.num + 1 };
+          });
+        }}
+        className="tc"
+      >
         <div>
           <span>详情</span>
           {id}
         </div>
         <div className="box">
-          <div className="left"> </div>
+          <div className="left"> {this.state.num}</div>
           <div className="right"> </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const os = require('os');
 const HappyPack = require('happypack');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
@@ -14,12 +14,13 @@ const smp = new SpeedMeasurePlugin();
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const paths = require('./paths');
 
-const cientEnvironment = require('./env');
-const env = cientEnvironment();
+const clientEnvironment = require('./env');
+const env = clientEnvironment();
 
 module.exports = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
+  console.log('envenvenvenv', env, isEnvDevelopment);
   const getStyleLoaders = () =>
     [
       isEnvProduction ? MiniCssExtractPlugin.loader : 'style-loader',
@@ -44,6 +45,7 @@ module.exports = function (webpackEnv) {
       path: paths.appDist,
       publicPath: '/',
       filename: `static/js/[name]${isEnvProduction ? '.[contenthash:8]' : ''}.js`,
+      clean: true,
     },
     module: {
       // noParse: /lodash/,
@@ -53,6 +55,9 @@ module.exports = function (webpackEnv) {
           loader: 'babel-loader',
           include: paths.appSrc,
           exclude: /node_modules/,
+          options: {
+            cacheDirectory: true,
+          },
         },
         {
           test: /\.(sc|c)ss$/,
@@ -80,7 +85,7 @@ module.exports = function (webpackEnv) {
       ],
     },
     optimization: {
-      minimize: true,
+      minimize: isEnvProduction,
       minimizer: [
         new TerserPlugin({
           terserOptions: {
@@ -92,7 +97,7 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
-        new OptimizeCSSAssetsPlugin(),
+        // new CssMinimizerPlugin(),
       ],
       splitChunks: {
         chunks: 'all',
@@ -117,15 +122,6 @@ module.exports = function (webpackEnv) {
         },
       },
       // runtimeChunk: true
-    },
-    performance: {
-      // false | "error" | "warning" // 不显示性能提示 | 以错误形式提示 | 以警告形式提示
-      hints: isEnvProduction ? 'warning' : false,
-      // 开发环境设置较大防止警告
-      // 根据入口起点的最大体积，控制webpack何时生成性能提示,整数类型,以字节为单位
-      maxEntrypointSize: 250000,
-      // 最大单个资源体积，默认250000 (bytes)
-      maxAssetSize: 250000,
     },
     plugins: [
       new webpack.DefinePlugin(env),
@@ -171,20 +167,30 @@ module.exports = function (webpackEnv) {
       //   threadPool: happyThreadPool,
       //   verbose: true,
       // }),
-      isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
-      isEnvProduction &&
-        new CleanWebpackPlugin({
-          verbose: true,
-        }),
+      // isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
+      // isEnvProduction &&
+      //   new CleanWebpackPlugin({
+      //     verbose: true,
+      //   }),
       isEnvProduction &&
         new MiniCssExtractPlugin({
           filename: 'static/css/[name].[contenthash:10].css',
         }),
       process.env.NODE_ENV_REPORT && new BundleAnalyzerPlugin(),
     ].filter(Boolean),
+    performance: {
+      // false | "error" | "warning" // 不显示性能提示 | 以错误形式提示 | 以警告形式提示
+      hints: isEnvProduction ? 'warning' : false,
+      // 开发环境设置较大防止警告
+      // 根据入口起点的最大体积，控制webpack何时生成性能提示,整数类型,以字节为单位
+      maxEntrypointSize: 250000,
+      // 最大单个资源体积，默认250000 (bytes)
+      maxAssetSize: 250000,
+    },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
       alias: {
+        // 'react-dom': '@hot-loader/react-dom',
         '@redux': paths.appRedux,
         '@pages': paths.appPages,
         '@util': paths.appUtil,
