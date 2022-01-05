@@ -6,8 +6,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const os = require('os');
-const HappyPack = require('happypack');
-const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 const smp = new SpeedMeasurePlugin();
 
@@ -46,6 +44,9 @@ module.exports = function (webpackEnv) {
       publicPath: '/',
       filename: `static/js/[name]${isEnvProduction ? '.[contenthash:8]' : ''}.js`,
       clean: true,
+    },
+    cache: {
+      type: 'filesystem', // 使用文件缓存
     },
     module: {
       // noParse: /lodash/,
@@ -161,12 +162,6 @@ module.exports = function (webpackEnv) {
         ],
       }),
       new webpack.ProgressPlugin(),
-      // new HappyPack({
-      //   id: 'happyBabel',
-      //   loaders: ['babel-loader?cacheDirectory=true'],
-      //   threadPool: happyThreadPool,
-      //   verbose: true,
-      // }),
       // isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
       // isEnvProduction &&
       //   new CleanWebpackPlugin({
