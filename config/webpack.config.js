@@ -1,15 +1,15 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const os = require('os');
+
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 const smp = new SpeedMeasurePlugin();
-
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 const paths = require('./paths');
 
 const clientEnvironment = require('./env');
@@ -18,7 +18,7 @@ const env = clientEnvironment();
 module.exports = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
-  console.log('envenvenvenv', env, isEnvDevelopment);
+  // console.log('envenvenvenv', env, isEnvDevelopment);
   const getStyleLoaders = () =>
     [
       isEnvProduction ? MiniCssExtractPlugin.loader : 'style-loader',
@@ -55,7 +55,6 @@ module.exports = function (webpackEnv) {
           test: /\.tsx?$/,
           loader: 'babel-loader',
           include: paths.appSrc,
-          exclude: /node_modules/,
           options: {
             cacheDirectory: true,
           },
@@ -67,6 +66,7 @@ module.exports = function (webpackEnv) {
         {
           test: /\.(gif|png|jpe?g|svg)(\?.*)?$/,
           type: 'asset',
+          include: [paths.appSrc],
           generator: {
             filename: 'static/img/[name].[ext]?[hash]',
           },
@@ -79,6 +79,7 @@ module.exports = function (webpackEnv) {
         {
           test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
           type: 'asset/resource',
+          include: [paths.appSrc],
           generator: {
             filename: 'fonts/[name].[hash:7].[ext]',
           },
@@ -122,7 +123,7 @@ module.exports = function (webpackEnv) {
           },
         },
       },
-      // runtimeChunk: true
+      runtimeChunk: true,
     },
     plugins: [
       new webpack.DefinePlugin(env),
@@ -163,10 +164,6 @@ module.exports = function (webpackEnv) {
       }),
       new webpack.ProgressPlugin(),
       // isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
-      // isEnvProduction &&
-      //   new CleanWebpackPlugin({
-      //     verbose: true,
-      //   }),
       isEnvProduction &&
         new MiniCssExtractPlugin({
           filename: 'static/css/[name].[contenthash:10].css',
@@ -175,7 +172,7 @@ module.exports = function (webpackEnv) {
     ].filter(Boolean),
     performance: {
       // false | "error" | "warning" // 不显示性能提示 | 以错误形式提示 | 以警告形式提示
-      hints: isEnvProduction ? 'warning' : false,
+      // hints: isEnvProduction ? 'warning' : false,
       // 开发环境设置较大防止警告
       // 根据入口起点的最大体积，控制webpack何时生成性能提示,整数类型,以字节为单位
       maxEntrypointSize: 250000,

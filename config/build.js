@@ -9,6 +9,7 @@ const compiler = webpack(config, (err, stats) => {
   if (err) {
     throw err;
   }
+  // console.log(stats.toJson({ all: false, assets: true }));
   process.stdout.write(
     stats.toString({
       colors: true,
@@ -16,7 +17,11 @@ const compiler = webpack(config, (err, stats) => {
       children: false,
       chunks: false,
       chunkModules: false,
-    }) + '\n'
+    }) + '\n\n'
   );
+  if (stats.hasErrors()) {
+    spinner.failed('  Build failed with errors.\n');
+    process.exit(1);
+  }
   spinner.succeed('build success');
 });
