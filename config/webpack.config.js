@@ -1,8 +1,9 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 const smp = new SpeedMeasurePlugin();
@@ -99,7 +100,7 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
-        // new CssMinimizerPlugin(),
+        new CssMinimizerPlugin(),
       ],
       splitChunks: {
         chunks: 'all',
@@ -168,6 +169,7 @@ module.exports = function (webpackEnv) {
         new MiniCssExtractPlugin({
           filename: 'static/css/[name].[contenthash:10].css',
         }),
+      isEnvProduction && new CompressionPlugin(),
       process.env.NODE_ENV_REPORT && new BundleAnalyzerPlugin(),
     ].filter(Boolean),
     performance: {
