@@ -6,7 +6,7 @@ const Home = React.lazy(() => import(/* webpackChunkName: "Home" */ '../pages/ho
 const Contact = React.lazy(() => import(/* webpackChunkName: "Contact" */ '../pages/contact/Contact'));
 const Detail = React.lazy(() => import(/* webpackChunkName: "Detail" */ '../pages/detail/Detail'));
 const Shopping = React.lazy(() => import(/* webpackChunkName: "ShoppingPage" */ '../pages/shopping/ShoppingPage'));
-   
+
 function RouteConfig() {
   return (
     <BrowserRouter basename="/">
