@@ -20,7 +20,7 @@ const compiler = webpack(config, (err, stats) => {
     }) + '\n\n'
   );
   if (stats.hasErrors()) {
-    spinner.failed('  Build failed with errors.\n');
+    spinner.fail('  Build failed with errors.\n');
     process.exit(1);
   }
   spinner.succeed('build success');

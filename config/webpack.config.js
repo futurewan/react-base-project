@@ -8,6 +8,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 const smp = new SpeedMeasurePlugin();
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -15,6 +16,10 @@ const paths = require('./paths');
 
 const clientEnvironment = require('./env');
 const env = clientEnvironment();
+
+const config = {
+  gzip:false
+}
 
 module.exports = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
@@ -58,6 +63,7 @@ module.exports = function (webpackEnv) {
           include: paths.appSrc,
           options: {
             cacheDirectory: true,
+            plugins: [isEnvDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
           },
         },
         {
@@ -88,7 +94,7 @@ module.exports = function (webpackEnv) {
       ],
     },
     optimization: {
-      minimize: isEnvProduction,
+      minimize: false,
       minimizer: [
         new TerserPlugin({
           terserOptions: {
@@ -109,7 +115,7 @@ module.exports = function (webpackEnv) {
         cacheGroups: {
           dll: {
             chunks: 'all',
-            test: /[\\/]node_modules[\\/](react|react-dom|react-redux|react-router-dom|redux)[\\/]/,
+            test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom|redux)[\\/]/,
             name: 'dll',
             priority: 100,
             /* 为此缓存组创建块时，告诉webpack忽略minSize,minChunks,maxAsyncRequests,maxInitialRequests选项。*/
@@ -124,7 +130,7 @@ module.exports = function (webpackEnv) {
           },
         },
       },
-      runtimeChunk: true,
+      // runtimeChunk: true,
     },
     plugins: [
       new webpack.DefinePlugin(env),
@@ -165,11 +171,12 @@ module.exports = function (webpackEnv) {
       }),
       new webpack.ProgressPlugin(),
       // isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
+      isEnvDevelopment && new ReactRefreshPlugin(),
       isEnvProduction &&
         new MiniCssExtractPlugin({
           filename: 'static/css/[name].[contenthash:10].css',
         }),
-      isEnvProduction && new CompressionPlugin(),
+      isEnvProduction && config.gzip && new CompressionPlugin(),
       process.env.NODE_ENV_REPORT && new BundleAnalyzerPlugin(),
     ].filter(Boolean),
     performance: {
@@ -184,7 +191,6 @@ module.exports = function (webpackEnv) {
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
       alias: {
-        // 'react-dom': '@hot-loader/react-dom',
         '@redux': paths.appRedux,
         '@pages': paths.appPages,
         '@util': paths.appUtil,

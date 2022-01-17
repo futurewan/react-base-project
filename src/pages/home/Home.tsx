@@ -5,11 +5,15 @@ import 'react-region-picker/lib/style.css';
 import style from '../../assets/styles/home.scss';
 
 export default function Home() {
+  const stringing = [1, 2, 3, 4, 5];
+  const ff = stringing.includes(1);
+  console.log('ff', ff);
   return (
     <div>
       <div className={style['nav-list']}>
-        <NavLink activeClassName="selected" to="/home">
+        <NavLink className={({ isActive }) => `nav-link${isActive ? ' selected' : ''}`} to="/home">
           首页
+          {ff}
         </NavLink>
         <Link to="/shopping">购物车</Link>
         <Link
@@ -17,7 +21,6 @@ export default function Home() {
             pathname: '/detail/2',
             search: '?sort=name',
             hash: '#name',
-            state: { fromHome: true },
           }}
         >
           详情页

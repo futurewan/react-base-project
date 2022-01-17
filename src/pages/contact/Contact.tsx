@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useMemo } from 'react';
 
 const defaultValue = { color: '', value: '' };
 const ThemeContext = React.createContext(defaultValue);
@@ -29,8 +29,9 @@ function MyBox() {
 }
 
 export default function Contact() {
+  const theme = useMemo(() => ({ color: 'darkgoldenrod', value: '关于我们' }), []);
   return (
-    <ThemeContext.Provider value={{ color: 'darkgoldenrod', value: '关于我们' }}>
+    <ThemeContext.Provider value={theme}>
       <MyBox />
     </ThemeContext.Provider>
   );

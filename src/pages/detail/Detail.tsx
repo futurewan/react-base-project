@@ -1,58 +1,33 @@
-import React, { Component } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import './detail.scss';
 
-interface DetailState {
-  id: string;
-  num: number;
-}
-interface RouteParams {
-  id: string;
-}
-interface DetailProps extends RouteComponentProps<RouteParams> {}
+const Detail: React.FC = () => {
+  const [id, setId] = useState<undefined | string>();
+  const [num, setNum] = useState(1);
+  const match = useParams();
+  useEffect(() => {
+    setId(match.id);
+  }, []);
 
-export default class Detail extends Component<DetailProps, DetailState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      id: '',
-      num: 1,
-    };
-  }
-
-  componentDidMount() {
-    const obj1 = { name: 1 };
-    const obj2 = Object.assign({}, obj1, { age: 10 });
-
-    console.log(obj2, obj1);
-    console.log(this.props);
-    const { match } = this.props;
-    this.setState({
-      id: match.params.id,
-    });
-  }
-
-  render() {
-    const { id } = this.state;
-    return (
-      <div
-        onClick={() => {
-          this.setState((state) => {
-            return { num: state.num + 1 };
-          });
-        }}
-        className="tc"
-      >
-        <div>
-          <span>详情</span>
-          {id}
-        </div>
-        <div className="box">
-          <div className="left"> {this.state.num}</div>
-          <div className="right"> </div>
-        </div>
+  return (
+    <div
+      onClick={() => {
+        setNum(num + 1);
+      }}
+      className="tc"
+    >
+      <div>
+        <span>详情</span>
+        {id}
       </div>
-    );
-  }
-}
+      <div className="box">
+        <div className="left"> {num}</div>
+        <div className="right"> </div>
+      </div>
+    </div>
+  );
+};
+
+export default Detail;

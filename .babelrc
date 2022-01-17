@@ -3,14 +3,15 @@
     [
       "@babel/preset-env",
       {
-        "modules": false
+        "modules": false,
+        // "useBuiltIns": "usage", //方案1
+        // "corejs": 3
       }
     ],
     "@babel/typescript",
     "@babel/preset-react"
   ],
   "plugins": [
-    "react-hot-loader/babel",
     "@babel/plugin-proposal-class-properties",
     [
       "@babel/plugin-transform-runtime",
