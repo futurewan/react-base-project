@@ -25,8 +25,9 @@ module.exports = {
    * react eslint-plugin-react的缩写，使ESLint支持 React 语义
    * @typescript-eslint @typescript-eslint/eslint-plugin的缩写，为TypeScript代码库提供lint规则
    */
-  plugins: ['react', '@typescript-eslint','prettier'],
+  plugins: ['react', '@typescript-eslint'],
   rules: {
+    "prettier/prettier": "error",
     'no-console': 'off',
     'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['document'] }],
     'no-unused-expressions': 'off',
