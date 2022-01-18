@@ -66,6 +66,7 @@
     "express": "^4.17.2",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.4",
+    "lint-staged": "^12.1.7",
     "mini-css-extract-plugin": "^2.4.6",
     "node-sass": "^7.0.1",
     "ora": "^5.4.1",
@@ -96,6 +97,12 @@
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
     }
+  },
+  "lint-staged": {
+    "src/**/*.scss": [
+      "stylelint --fix"
+    ],
+    "src/**/*.{ts,tsx,js,jsx}": "eslint --fix"
   },
   "browserslist": [
     "iOS >= 8",

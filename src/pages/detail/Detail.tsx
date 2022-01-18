@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import './detail.scss';
-
 const Detail: React.FC = () => {
   const [id, setId] = useState<undefined | string>();
   const [num, setNum] = useState(1);
