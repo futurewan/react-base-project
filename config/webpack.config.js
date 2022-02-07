@@ -11,7 +11,6 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
 const paths = require('./paths');
 
 const clientEnvironment = require('./env');
@@ -25,26 +24,27 @@ module.exports = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
   // console.log('envenvenvenv', env, isEnvDevelopment);
-  const getStyleLoaders = () =>
+  const getStyleLoaders = ({modules = true}) =>
     [
       isEnvProduction ? MiniCssExtractPlugin.loader : 'style-loader',
       {
         loader: 'css-loader',
         options: {
-          modules: {
+          modules: modules ?  {
             localIdentName: '[name]-[local]-[hash:base64:5]',
-          },
+          } : false,
         },
       },
       'postcss-loader',
       'sass-loader',
     ].filter(Boolean);
 
-  const entry = { app: paths.appIndex };
   let webpackConfig = {
     devtool: isEnvDevelopment ? 'inline-source-map' : 'source-map',
     mode: isEnvProduction ? 'production' : 'development',
-    entry,
+    entry:{
+      app: paths.appIndex 
+    },
     output: {
       path: paths.appDist,
       publicPath: '/',
@@ -68,7 +68,13 @@ module.exports = function (webpackEnv) {
         },
         {
           test: /\.(sc|c)ss$/,
-          use: getStyleLoaders(),
+          use: getStyleLoaders({ modules:true }),
+          include: paths.appSrc,
+        },
+        {
+          test: /\.css$/,
+          use: getStyleLoaders({ modules:false }),
+          include: paths.appNodeModules
         },
         {
           test: /\.(gif|png|jpe?g|svg)(\?.*)?$/,
@@ -199,9 +205,7 @@ module.exports = function (webpackEnv) {
       modules: ['node_modules', paths.appNodeModules], // 默认是当前目录下的 node_modules
     },
     devServer: {
-      // contentBase: './',
       host: '0.0.0.0',
-      // disableHostCheck: true,
       allowedHosts: 'all',
       compress: true,
       port: 9008,

@@ -3,3 +3,4 @@
 **/config/**
 .eslintrc.js
 postcss.config.js
+index.html

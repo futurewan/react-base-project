@@ -10,7 +10,7 @@
     "build:test": "cross-env NODE_ENV=test node config/build.js",
     "analyze": "cross-env NODE_ENV_REPORT=true npm run build:prod",
     "lint": "eslint src --ext ts,tsx,js,jsx && stylelint \"./src/**/*.scss\"",
-    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,json}\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,scss,json}\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "commit": "git-cz",
     "prepare": "husky install"
@@ -99,10 +99,7 @@
     }
   },
   "lint-staged": {
-    "src/**/*.scss": [
-      "stylelint --fix"
-    ],
-    "src/**/*.{ts,tsx,js,jsx}": "eslint --fix"
+    "src/**/*.{ts,tsx,js,jsx,css,json,scss}": "prettier --write"
   },
   "browserslist": [
     "iOS >= 8",

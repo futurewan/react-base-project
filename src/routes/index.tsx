@@ -6,6 +6,7 @@ const Home = React.lazy(() => import(/* webpackChunkName: "Home" */ '../pages/ho
 const Contact = React.lazy(() => import(/* webpackChunkName: "Contact" */ '../pages/contact/Contact'));
 const Detail = React.lazy(() => import(/* webpackChunkName: "Detail" */ '../pages/detail/Detail'));
 const Shopping = React.lazy(() => import(/* webpackChunkName: "ShoppingPage" */ '../pages/shopping/ShoppingPage'));
+const NotMatch = () => <div>页面未找到</div>;
 
 function RouteConfig() {
   return (
@@ -17,6 +18,7 @@ function RouteConfig() {
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/detail/:id" element={<Detail />} />
+          <Route path="*" element={<NotMatch />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

@@ -19,9 +19,9 @@ dotenvFiles.forEach((dotenvFile) => {
   }
 });
 function clientEnvironment() {
-  const MAPLE_APP = /^MAPLE_APP_/i;
+  const REACT_APP = /^REACT_APP_/i;
   const raw = Object.keys(process.env)
-    .filter((key) => MAPLE_APP.test(key))
+    .filter((key) => REACT_APP.test(key))
     .reduce(
       (env, key) => {
         env[key] = process.env[key];
