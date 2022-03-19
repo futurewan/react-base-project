@@ -1,13 +1,8 @@
 import React from 'react';
 
-import Routes from './routes';
-import './assets/styles/app.scss';
+import './app.less';
 
 function App() {
-  return (
-    <div className="container">
-      <Routes />
-    </div>
-  );
+  return <div className="container">hello</div>;
 }
 export default App;

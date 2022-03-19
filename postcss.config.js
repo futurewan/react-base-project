@@ -1,4 +1,11 @@
 // https://github.com/michael-ciniawsky/postcss-load-config
 module.exports = {
-  plugins: [require('autoprefixer')],
+  plugins: {
+    autoprefixer: {},
+    'postcss-pxtorem': {
+      rootValue: 16,
+      propList: ['*'],
+      minPixelValue: 1,
+    },
+  },
 };
