@@ -10,6 +10,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      
       - name: Install and Build
         run: |
           npm i
