@@ -31,7 +31,7 @@ module.exports = function (webpackEnv) {
     entry,
     output: {
       path: paths.appDist,
-      publicPath: '/',
+      publicPath: './react-base-project/',
       filename: `static/js/[name]${isEnvProduction ? '.[contenthash:8]' : ''}.js`,
     },
     module: {
