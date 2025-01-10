@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 
 const Loading = <div> loading... </div>;
 const Home = React.lazy(() => import(/* webpackChunkName: "Home" */ '../pages/home/Home'));
@@ -9,7 +9,7 @@ const Shopping = React.lazy(() => import(/* webpackChunkName: "ShoppingPage" */ 
 
 console.log('Shopping', [1, 2, 3].includes(1));
 const RouteConfig = () => (
-  <BrowserRouter basename="/">
+  <HashRouter basename="/">
     <Suspense fallback={Loading}>
       <Switch>
         <Route exact path="/" component={Home} />
