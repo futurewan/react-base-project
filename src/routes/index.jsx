@@ -19,6 +19,6 @@ const RouteConfig = () => (
         <Route path="/detail/:id" component={Detail} />
       </Switch>
     </Suspense>
-  </BrowserRouter>
+  </HashRouter>
 );
 export default RouteConfig;
