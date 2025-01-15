@@ -46,7 +46,7 @@ export default class Home extends Component {
               state: { fromHome: true },
             }}
           >
-            详情页2
+            详情页
           </Link>
           <Link to="/contact">联系我们</Link>
         </div>
