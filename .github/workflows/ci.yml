@@ -28,5 +28,5 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          personal_token: ${{ secrets.SECRETS_DEPLOY }}
+     #     personal_token: ${{ secrets.SECRETS_DEPLOY }}
           folder: ./dist     
